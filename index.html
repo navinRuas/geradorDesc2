@@ -1,0 +1,139 @@
+ <!DOCTYPE html>
+<html lang="pt-br">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Formulário</title>
+</head>
+<body>
+    <header>
+        <div class="topnav">
+            <div>
+                <img class="logo-image" src="inep-logo-1.png" height="100px" alt="Inepnet"> 
+                <h1>Gerador de Descrição</h1>
+            </div>
+        </div>
+    </header>
+    <div class="box">
+    <div class="loader"></div>
+    </div>
+    <div class="container">
+    <form>
+        <p>
+            <div class="select-container">
+            <label for="AAP">*Atividade PGD: </label><br>
+            <select id="AAP" name="AAP" >
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe a atividade do PGD *(campo obrigatório)</span>
+            </div>
+            </div>
+        </p>
+        <p>
+            <div class="select-container">
+            <label for="DDD">*Demanda: </label><br>
+            <select id="DDD" name="DDD" >
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe o tipo de demanda *(campo obrigatório)</span>
+            </div>
+            </div>
+        </p>
+        <p>
+            <div class="select-container">
+            <label for="AT">*Atividade: </label><br>
+            <select id="AT" name="AT" >
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe a atividade correspondente à demanda selecionada *(campo obrigatório).</span>
+            </div>
+        </p>
+        <p>
+            <div class="select-container">
+            <label for="PP">Produto: </label><br>
+            <select id="PP" name="PP" >
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe o produto a ser desenvolvido na atividade supracitada (campo obrigatório, quando aparecer produtos para selecionar).</span>
+            </div>
+        </p>
+        <p>
+            <div class="select-container">
+            <label for="YYYY">Ano da ação: </label><br>
+            <select id="YYYY" name="YYYY">
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe o Ano da Ação.</span>
+            </div>
+        </p>
+        <p>
+            <div class="select-container">
+            <label for="AA">Ação: </label><br>
+            <select id="AA" name="AA">
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe o tipo de Ação.</span>
+            </div>
+        </p>
+        <p>
+        <div class="select-container">
+            <label for="SP">Sprint: </label><br>
+            <select id="SP" name="SP">
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe a ID do Sprint.</span>
+            </div>
+        </p>
+        <p>
+        <div class="select-container">
+            <label for="ISP">Id Tarefa E-aud: </label><br>
+            <select id="ISP" name="ISP">
+            </select>
+            <div class="tooltip">
+            <div class ="quest">
+            ?
+            </div>
+            <span class="tooltiptext">Informe a ID da Subtarefa E-Aud.</span>
+            </div>
+        </p>
+        <p>
+            <button id="reset">Apagar</button>
+            <button id="gerar">Gerar</button>
+            <input type="text" id="Ret" value="" readonly>
+            <button id="copiar" onclick="copiarResultado()">Copiar</button>
+        </p>
+        </form>
+        </div>
+        <footer>
+            <p class="copyright">&copy; Copyright Audin INEP - <span id="currentYear"></span></p>
+            <script>
+                document.getElementById("currentYear").textContent = new Date().getFullYear();
+            </script>
+        </footer>
+</body>
+</html>
