@@ -95,9 +95,20 @@ window.addEventListener('load', function() {
         DDD.innerHTML = '';
 
         // Filter rows based on selected AAP value
-        const selectedNumAtividade = AAP.value;
-        const filteredRows = rows.filter(row => row['nº da atividade'] === selectedNumAtividade);
 
+        const selectedNumAtividade = AAP.value; // Assuming AAP is the select element
+        const selectedAtividade2 = AAP.options[AAP.selectedIndex].text.split(/-|\s+/)[0]; // Assuming AAP is the select element
+        console.log('Selected Atividade2:', selectedAtividade2);
+        console.log('Selected NumAtividade:', selectedNumAtividade);
+        
+        const filteredRows = rows.filter(row => {
+          const numAtividade = row['nº da atividade'];
+          const atividade2 = row['Atividade2'];
+        
+          // Check if both atividade2 and numAtividade match
+          return atividade2.toLowerCase() === selectedAtividade2.toLowerCase() && numAtividade === selectedNumAtividade;
+        });
+        
         // Populate DDD options
         const optionsDDD = ['Tipo de Demanda'];
         const valuesDDD = [''];
