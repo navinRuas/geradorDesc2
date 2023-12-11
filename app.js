@@ -160,7 +160,7 @@ DDD.addEventListener('change', function() {
   clearElement(SP);
   clearElement(ISP);
 
-  if (DDD.value != '' && (![12, 13, 14].includes(Number(DDD.value)))) {
+  if (DDD.value != '' ) {
     
     // Enable AT select
     document.getElementById("AT").disabled = false;
@@ -199,27 +199,6 @@ DDD.addEventListener('change', function() {
       option.value = sortedOptions[i].value;
       AT.add(option);
     }
-  } else if ([12, 13, 14].includes(Number(DDD.value))) {
-
-    fetch('ano.json')
-      .then(response => response.json())
-      .then(data => {
-        // Use the data here
-        ano = data;
-        
-        // Create and append the options to the select element
-        ano.forEach(function(item) {
-          const option = document.createElement("option");
-          option.value = item.value;
-          option.text = item.text;
-          YYYY.add(option);
-        });
-      })
-      .catch(error => {
-        // Handle errors here
-        console.error("Erro ano.json: ", error);
-      });
-      document.getElementById("YYYY").disabled = false;
   } else {
     clearElement(AT);
   }
@@ -233,35 +212,8 @@ AT.addEventListener('change', function() {
   clearElement(AA);
   clearElement(SP);
   clearElement(ISP);
-
-  if (DDD.value == 6 || DDD.value == 10 || DDD.value == 8 && AT.value == 1 || (DDD.value == 9 && [4, 5, 6].includes(Number(AT.value)))) {
-      var ano, acao, sprint;
-
-        fetch('ano.json')
-          .then(response => response.json())
-          .then(data => {
-            // Use the data here
-            ano = data;
-
-            // Create and append the options to the select element
-            ano.forEach(function(item) {
-              const option = document.createElement("option");
-              option.value = item.value;
-              option.text = item.text;
-              YYYY.add(option);
-            });
-          })
-          .catch(error => {
-            // Handle errors here
-            console.error("Erro ano.json: ", error);
-          });
-        document.getElementById("YYYY").disabled = false;
-        document.getElementById("SP").disabled = true;
-        document.getElementById("AA").disabled = true;
-        document.getElementById("ISP").disabled = true;
-      }
   
-  if ((AT.value !== '' && DDD.value !== '') && !(DDD.value == 6 || DDD.value == 10 || DDD.value == 8 && AT.value == 1 || (DDD.value == 9 && [4, 5, 6].includes(Number(AT.value))))) {
+  if (AT.value !== '' && DDD.value !== '') {
     // Enable PP select
     document.getElementById("PP").disabled = false;
 
@@ -319,6 +271,8 @@ PP.addEventListener('change', function() {
   clearElement(ISP);
 
   if (PP.value !== '' && AT.value !== '' && DDD.value !== '') {
+
+    document.getElementById("gerar").removeAttribute("disabled");
 
     var ano, acao, sprint;
 
