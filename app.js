@@ -436,7 +436,8 @@ apagar.addEventListener("click", event => {
   const selects = document.querySelectorAll("select");
   selects.forEach(select => select.disabled = true);
   document.getElementById("ISP").disabled = true;
-  document.getElementById("DDD").disabled = false;
+  document.getElementById("DDD").disabled = true;
+  document.getElementById("AAP").disabled = false;
 });
 
 function copiarResultado() {
