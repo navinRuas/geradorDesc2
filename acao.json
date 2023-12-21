@@ -1,5 +1,20 @@
 [  
   {
+    "value": "01",
+    "text": "Ação 01/2024 - Consultoria do modelo de contratação",
+    "year": "2024"
+  }, 
+  {
+    "value": "02",
+    "text": "Ação 02/2024 - Consultoria da gestão de riscos da operação logística",
+    "year": "2024"
+  } ,
+  {
+    "value": "03",
+    "text": "Ação 03/2024 - Avaliação  da gestão da segurança da informação e comunicações",
+    "year": "2024"
+  },
+  {
     "value": "04",
     "text": "Ação 04/2023 - Consultoria no Processo de Gestão de Riscos",
     "year": "2023"
