@@ -61,85 +61,43 @@ window.addEventListener('load', function() {
       console.log(data); // Log the response from the server
       rows = data;
 
-      const optionsAAP = ['Atividade PGD'];
-      const valuesAAP = [''];
+      // Removed AAP-related logic
+      
+      // Enable DDD select
+      document.getElementById("DDD").disabled = false;
+
+      // Populate DDD options
+      const optionsDDD = ['Tipo de Demanda'];
+      const valuesDDD = [''];
       for (let i = 0; i < rows.length; i++) {
-        const numAtividade = rows[i]['nº da atividade'];
-        let atividadePGD = rows[i]['Atividade PGD'];
-        let atividade2 = rows[i]['Atividade2'];
-        if (numAtividade === undefined || atividadePGD === undefined) {
+        const codDemanda = rows[i].CodDemanda;
+        let tipoDemanda = rows[i]['Tipo de Demanda'];
+        if (codDemanda === undefined || tipoDemanda === undefined) {
           break;
         }
-        atividadePGD = fixText(atividadePGD);
-        const numAtividadeFormatted = numAtividade.toString().padStart(2, '0');
-        const optionText = `${atividade2.toUpperCase()}-${numAtividadeFormatted} ${atividadePGD}`;
-        if (numAtividade && atividadePGD && !optionsAAP.includes(optionText)) {
-          optionsAAP.push(optionText);
-          valuesAAP.push(numAtividade);
+        tipoDemanda = fixText(tipoDemanda);
+        if (codDemanda && tipoDemanda && !optionsDDD.includes(tipoDemanda)) {
+          optionsDDD.push(tipoDemanda);
+          valuesDDD.push(codDemanda);
         }
       }
-      for (let i = 0; i < optionsAAP.length; i++) {
+      const DDD = document.getElementById("DDD");
+      for (let i = 0; i < optionsDDD.length; i++) {
         const option = document.createElement("option");
-        option.text = optionsAAP[i];
-        option.value = valuesAAP[i];
+        option.text = optionsDDD[i];
+        option.value = valuesDDD[i];
         if (isNaN(option.value)) { option.value = ''; }
-        AAP.add(option);
+        DDD.add(option);
       }
 
-      // Enable AAP select
-      document.getElementById("AAP").disabled = false;
-      document.querySelector('.box').style.display = 'none';
-      
-      AAP.addEventListener('change', function() {
-        // Clear DDD options
-        DDD.innerHTML = '';
-
-        // Filter rows based on selected AAP value
-
-        const selectedNumAtividade = AAP.value; // Assuming AAP is the select element
-        const selectedAtividade2 = AAP.options[AAP.selectedIndex].text.split(/-|\s+/)[0]; // Assuming AAP is the select element
-        console.log('Selected Atividade2:', selectedAtividade2);
-        console.log('Selected NumAtividade:', selectedNumAtividade);
-        
-        const filteredRows = rows.filter(row => {
-          const numAtividade = row['nº da atividade'];
-          const atividade2 = row['Atividade2'];
-        
-          // Check if both atividade2 and numAtividade match
-          return atividade2.toLowerCase() === selectedAtividade2.toLowerCase() && numAtividade === selectedNumAtividade;
-        });
-        
-        // Populate DDD options
-        const optionsDDD = ['Tipo de Demanda'];
-        const valuesDDD = [''];
-        for (let i = 0; i < filteredRows.length; i++) {
-          const codDemanda = filteredRows[i].CodDemanda;
-          let tipoDemanda = filteredRows[i]['Tipo de Demanda'];
-          if (codDemanda === undefined || tipoDemanda === undefined) {
-            break;
-          }
-          tipoDemanda = fixText(tipoDemanda);
-          if (codDemanda && tipoDemanda && !optionsDDD.includes(tipoDemanda)) {
-            optionsDDD.push(tipoDemanda);
-            valuesDDD.push(codDemanda);
-          }
-        }
-        for (let i = 0; i < optionsDDD.length; i++) {
-          const option = document.createElement("option");
-          option.text = optionsDDD[i];
-          option.value = valuesDDD[i];
-          if (isNaN(option.value)) { option.value = ''; }
-          DDD.add(option);
-        }
-
-        // Enable DDD select
-        document.getElementById("DDD").disabled = false;
-      });
+      // Enable DDD select
+      document.getElementById("DDD").disabled = false;
 
       document.querySelector('.box').style.display = 'none';
     });
 });
 
+/*
 AAP.addEventListener('change', function() {  
   clearElement(DDD);
   clearElement(AT);
@@ -148,7 +106,7 @@ AAP.addEventListener('change', function() {
   clearElement(AA);
   clearElement(SP);
   clearElement(ISP);
-});
+});*/
 
 // AT
 DDD.addEventListener('change', function() {
@@ -410,14 +368,49 @@ YYYY.addEventListener('change', function() {
 });
 
 // Adiciona um evento de clique 
-enviar.addEventListener("click", function(event) { // Previne o comportamento padrão do botão 
+enviar.addEventListener("click", function(event) {
   event.preventDefault();
 
   // Aqui começa o seu código 
-  const PAA = AA.value; const PYYYY = YYYY.value; const PPP = PP.value; const PDDD = DDD.value; const PAT = AT.value; const PSP = SP.value; const PISP = ISP.value
+  const PAA = AA.value;
+  const PYYYY = YYYY.value;
+  const PPP = PP.value;
+  const PDDD = DDD.value;
+  const PAT = AT.value;
+  const PSP = SP.value;
+  const PISP = ISP.value;
 
-  Ret.value = ('<demanda>' + PDDD + '</demanda><atividade>' + PAT + '</atividade><produto>' + PPP + '</produto><idEaud>' + PISP + '</idEaud><anoAcao>' + PYYYY + '</anoAcao><idAcao>' + PAA + '</idAcao><idSprint>' + PSP + '</idSprint>')
+  Ret.value = ('<demanda>' + PDDD + '</demanda><atividade>' + PAT + '</atividade><produto>' + PPP + '</produto><idEaud>' + PISP + '</idEaud><anoAcao>' + PYYYY + '</anoAcao><idAcao>' + PAA + '</idAcao><idSprint>' + PSP + '</idSprint>');
+
+  // Procurar possível AAP com base nos valores de DDD, AT e PP
+  findPossibleAAP(PDDD, PAT, PPP);
+
 });
+
+// Função para encontrar possível AAP com base nos valores de DDD, AT e PP no arquivo depara.json
+function findPossibleAAP(ddd, at, pp) {
+  //const parsedDepara = JSON.parse(`depara.json`); // Adicione aqui o conteúdo do seu arquivo depara.json
+  fetch('depara.json')
+    .then(response => response.json())
+    .then(data => {
+      // Use the data here
+      parsedDepara = data;
+      console.log(parsedDepara);
+      for (let i = 0; i < parsedDepara.length; i++) {
+        const row = parsedDepara[i];
+        
+        if (row['CodDemanda'] == ddd && row['CodAtividade'] == at && row['CodProduto'] == pp) {
+          if (row['Atividade PGD'] != null) {
+            alert('Possível AAP: ' + row['Atividade2'] + ' ' + row['n\u00ba da atividade'] + ' - ' + row['Atividade PGD']);
+          } else {
+            alert('Nenhum AAP correspondente encontrado.');
+          }
+        }
+      }
+    }
+  );
+  return null;
+}
 
 apagar.addEventListener("click", event => {
   event.preventDefault()
